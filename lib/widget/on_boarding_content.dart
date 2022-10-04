@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 
 class OnBoardContent extends StatelessWidget {
   final String image, tittle, description;
-  const OnBoardContent({Key? key, required this.image, required this.tittle, required this.description,}) : super(key: key);
+  const OnBoardContent({Key? key,
+    required this.image,
+    required this.tittle,
+    required this.description
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,34 +1,27 @@
-import 'dart:convert';
-
 // To parse this JSON data, do
-//     final restaurantList = restaurantListFromJson(jsonString);
+//
+//     final restaurantSearch = restaurantSearchFromJson(jsonString);
 
 import 'dart:convert';
 
-RestaurantData restaurantListFromJson(String str) => RestaurantData.fromJson(json.decode(str));
-class RestaurantData {
-  RestaurantData({
+RestaurantSearch restaurantSearchFromJson(String str) => RestaurantSearch.fromJson(json.decode(str));
+
+class RestaurantSearch {
+  RestaurantSearch({
     required this.error,
-    required this.message,
-    required this.count,
     required this.founded,
     required this.restaurants,
   });
 
   bool error;
-  String? message;
-  int? count;
-  int? founded;
+  int founded;
   List<Restaurant> restaurants;
 
-  factory RestaurantData.fromJson(Map<String, dynamic> json) => RestaurantData(
+  factory RestaurantSearch.fromJson(Map<String, dynamic> json) => RestaurantSearch(
     error: json["error"],
-    message: json["message"],
-    count: json["count"],
     founded: json["founded"],
     restaurants: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
   );
-
 }
 
 class Restaurant {

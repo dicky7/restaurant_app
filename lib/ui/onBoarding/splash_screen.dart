@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -16,43 +18,12 @@ class SplashScreen extends StatefulWidget{
 
 class _SplashScreenState extends State<SplashScreen> {
   var _state;
+  late Timer _timer;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FutureBuilder(
-          future: _onBoarding(),
-          builder: (context, snapshot) {
-            return Scaffold(
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: Lottie.asset("images/logo.json"),
-                      ),
-                      Text(
-                        "Restaurant App",
-                        style: GoogleFonts.poppins(
-                          fontSize: 28,
-                          color: Colors.amber,
-                          fontWeight: FontWeight.w600
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-      ),
-    );
-  }
-
-  Future<String> _onBoarding() async{
-    await Future.delayed(const Duration(seconds: 5)).then((value){
+  void initState() {
+    getState();
+    _timer = Timer(const Duration(seconds: 5), () {
       if(_state == true){
         Navigator.pushReplacementNamed(context, MainPage.rootName);
       }
@@ -60,8 +31,36 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, OnBoarding.routName);
       }
     });
-    return "Splash";
+    super.initState();
   }
+  @override
+  Widget build(BuildContext context) {
+
+    return  Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Lottie.asset("images/logo.json"),
+              ),
+              Text(
+                "Restaurant App",
+                style: GoogleFonts.poppins(
+                    fontSize: 28,
+                    color: Colors.amber,
+                    fontWeight: FontWeight.w600
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 
   getState() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -70,10 +69,9 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-
   @override
-  void initState() {
-    getState();
-    super.initState();
+  void dispose() {
+    _timer;
+    super.dispose();
   }
 }

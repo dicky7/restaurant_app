@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage> {
-  var name;
+  String _name = "";
 
   @override
   void initState() {
@@ -19,12 +19,13 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-          body: Container(
+    return Scaffold(
+        body: SafeArea(
+          child: Container(
             color: const Color(0xffededed),
-            child: BodyHome(name: name),
+            child: BodyHome(name: _name),
           ),
+
         )
     );
   }
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     //Return String
     setState(() {
       String username = (prefs.getString('username') ?? "");
-      name = username;
+      _name = username;
     });
   }
 }

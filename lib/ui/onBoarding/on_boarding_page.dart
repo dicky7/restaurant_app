@@ -29,21 +29,19 @@ class _OnBoardingState extends State<OnBoarding> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Expanded(
-                child: PageView.builder(
-                  onPageChanged:(index) {
-                    setState(() {
-                      onLastPage = (index == 2);
-                    });
-                  },
-                  itemCount: onBoardItem.length,
-                    controller: _pageController,
-                    itemBuilder: (context, index) => OnBoardContent(
-                      image: onBoardItem[index].image,
-                      tittle: onBoardItem[index].tittle,
-                      description: onBoardItem[index].description,
-                    )
-                ),
+              child: PageView.builder(
+                onPageChanged:(index) {
+                  setState(() {
+                    onLastPage = (index == 2);
+                  });
+                },
+                itemCount: onBoardItem.length,
+                  controller: _pageController,
+                  itemBuilder: (context, index) => OnBoardContent(
+                    image: onBoardItem[index].image,
+                    tittle: onBoardItem[index].tittle,
+                    description: onBoardItem[index].description,
+                  )
               ),
             ),
             Container(

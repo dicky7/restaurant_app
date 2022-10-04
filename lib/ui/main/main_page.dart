@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/providers/restaurant_providers.dart';
 import 'package:restaurant_app/ui/main/favorite/favorite_page.dart';
 import 'package:restaurant_app/ui/main/home/home_page.dart';
 import 'package:restaurant_app/ui/main/search/search_page.dart';
