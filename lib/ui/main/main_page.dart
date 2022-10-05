@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/providers/restaurant_providers.dart';
 import 'package:restaurant_app/ui/main/favorite/favorite_page.dart';
+import 'package:restaurant_app/ui/main/home/detail/detail_page.dart';
 import 'package:restaurant_app/ui/main/home/home_page.dart';
 import 'package:restaurant_app/ui/main/search/search_page.dart';
 import 'package:restaurant_app/ui/main/setting/setting_page.dart';
+import 'package:restaurant_app/utils/notification_helper.dart';
 
 class MainPage extends StatefulWidget{
   static const rootName = "/home_page";
@@ -18,7 +20,9 @@ class MainPage extends StatefulWidget{
 }
 
 class _MainPageState extends State<MainPage> {
+  final NotificationHelper _notificationHelper = NotificationHelper();
   int _selectedIndex = 0;
+
   final List<Widget> _listWidget = [
     HomePage(),
     SearchPage(),
@@ -32,6 +36,20 @@ class _MainPageState extends State<MainPage> {
     Colors.pink,
     Colors.green
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationHelper.configureSelectNotificationSubject(
+      DetailPage.rootName
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    selectNotificationSubject.close();
+  }
 
   @override
   Widget build(BuildContext context) {

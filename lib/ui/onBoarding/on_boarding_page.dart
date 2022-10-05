@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/onboarding_item.dart';
 import 'package:restaurant_app/ui/onBoarding/login_page.dart';
 import 'package:restaurant_app/widget/on_boarding_content.dart';
@@ -66,7 +67,7 @@ class _OnBoardingState extends State<OnBoarding> {
                             "Done",
                         ),
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, LoginPage.rootName);
+                          Navigation.intentWithDataClearTop(LoginPage.rootName);
                         },
                       )
                     :GestureDetector(

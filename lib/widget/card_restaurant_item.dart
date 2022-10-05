@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_data.dart';
 import 'package:restaurant_app/ui/main/home/detail/detail_page.dart';
@@ -12,7 +13,7 @@ class CardRestaurantItem extends StatelessWidget{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, DetailPage.rootName, arguments: restaurant.id);
+        Navigation.intentWithData(DetailPage.rootName, arguments: restaurant.id);
       },
       child: Container(
         margin: const EdgeInsets.symmetric(

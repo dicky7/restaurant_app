@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/ui/main/home/home_page.dart';
 import 'package:restaurant_app/ui/main/main_page.dart';
 import 'package:restaurant_app/ui/onBoarding/on_boarding_page.dart';
@@ -25,10 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
     getState();
     _timer = Timer(const Duration(seconds: 5), () {
       if(_state == true){
-        Navigator.pushReplacementNamed(context, MainPage.rootName);
+        Navigation.intentWithDataClearTop(MainPage.rootName);
       }
       else{
-        Navigator.pushReplacementNamed(context, OnBoarding.routName);
+        Navigation.intentWithDataClearTop(OnBoarding.routName);
       }
     });
     super.initState();

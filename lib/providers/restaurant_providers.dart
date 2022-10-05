@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_data.dart';
 import 'package:restaurant_app/data/model/restaurant_details.dart';
-import 'package:restaurant_app/data/model/restaurant_search.dart';
 import 'package:restaurant_app/utils/result_state.dart';
 import 'package:http/http.dart' as http;
 

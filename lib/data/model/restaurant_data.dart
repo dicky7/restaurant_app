@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'dart:convert';
 
 RestaurantData restaurantListFromJson(String str) => RestaurantData.fromJson(json.decode(str));
+String restaurantDataToJson(RestaurantData data) => json.encode(data.toJson());
+
 class RestaurantData {
   RestaurantData({
     required this.error,
@@ -28,6 +30,13 @@ class RestaurantData {
     founded: json["founded"],
     restaurants: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
   );
+
+  Map<String, dynamic> toJson() => {
+    "error": error,
+    "message": message,
+    "count": count,
+    "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson())),
+  };
 
 }
 
@@ -56,4 +65,13 @@ class Restaurant {
     city: json["city"],
     rating: json["rating"].toDouble(),
   );
+  
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "description": description,
+    "pictureId": pictureId,
+    "city": city,
+    "rating": rating,
+  };
 }

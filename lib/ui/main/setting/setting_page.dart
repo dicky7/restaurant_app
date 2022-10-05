@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/common/navigation.dart';
+import 'package:restaurant_app/providers/scheduling_providers.dart';
 import 'package:restaurant_app/ui/onBoarding/splash_screen.dart';
+import 'package:restaurant_app/widget/custom_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget{
@@ -37,8 +43,31 @@ class _SettingPageState extends State<SettingPage> {
             trailing: Switch.adaptive(
                 value: false,
                 onChanged: (value) {
-
+                  customDialog(context);
                 },
+            ),
+          ),
+        ),
+        Material(
+          child: ListTile(
+            title: Text(
+              "Scheduling Restaurant",
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.w400),
+            ),
+            trailing: Consumer<SchedulingProvider>(
+              builder: (context, scheduled, _) {
+                return Switch.adaptive(
+                  value: scheduled.isScheduled,
+                  onChanged: (value) async{
+                    if(Platform.isIOS){
+                      customDialog(context);
+                    }else{
+                      scheduled.scheduleNews(value);
+                    }
+
+                  },
+                );
+              },
             ),
           ),
         ),
@@ -56,12 +85,12 @@ class _SettingPageState extends State<SettingPage> {
                     content: const Text("Are your sure want logout? you may lose your data"),
                     actions: [
                       TextButton(onPressed: () {
-                        Navigator.pop(context);
+                        Navigation.back();
                       },
                           child: const Text("No", style: TextStyle(color: Colors.red))
                       ),
                       TextButton(onPressed: () {
-                        Navigator.pushReplacementNamed(context, SplashScreen.rootName);
+                        Navigation.intentWithDataClearTop(SplashScreen.rootName);
                         logout();
                       },
                           child: const Text("Yes", style: TextStyle(color: Colors.indigo))

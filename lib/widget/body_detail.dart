@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/common/utils.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_details.dart';
@@ -167,7 +168,7 @@ class BodyDetail extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigation.back();
                   }),
             ),
             _favoriteButton(),

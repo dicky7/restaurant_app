@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/ui/main/main_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -74,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                               child: const Text("Login"),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()){
-                                  Navigator.pushReplacementNamed(context, MainPage.rootName);
+                                  Navigation.intentWithDataClearTop(MainPage.rootName);
                                   saveUsername(_name, true);
                                 }
                               },
