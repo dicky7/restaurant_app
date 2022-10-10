@@ -5,7 +5,7 @@ class DateTimeHelper{
     // Date and Time Format
     final now = DateTime.now();
     final dateFormat = DateFormat('y/m/d');
-    const timeSpecific = "08:00:00";
+    const timeSpecific = "11:00:00";
     final completeFormat = DateFormat('y/m/d H:m:s');
 
     //if scheduling not show make sure date format use ('y/m/d') not ('y/M/d')
