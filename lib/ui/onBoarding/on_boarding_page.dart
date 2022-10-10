@@ -76,7 +76,7 @@ class _OnBoardingState extends State<OnBoarding> {
                         ),
                         onTap: () {
                           _pageController.nextPage(
-                              duration: Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 500),
                               curve: Curves.easeIn
                           );
                         },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/common/utils.dart';
 import 'package:restaurant_app/providers/restaurant_providers.dart';
 import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/card_restaurant_item.dart';
@@ -49,7 +48,6 @@ class _SearchPageState extends State<SearchPage> {
         "Lets Find Nearest Restaurant",
         style: Theme.of(context).textTheme.headline4!.copyWith(
             fontWeight: FontWeight.w700,
-            color: secondaryColor.withOpacity(0.8),
             height: 1.2),
       ),
     );
@@ -110,7 +108,6 @@ class _SearchPageState extends State<SearchPage> {
               "Restaurant Not Found",
               style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: secondaryColor.withOpacity(0.5),
                   height: 1.2),
             ),
           );

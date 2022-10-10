@@ -25,7 +25,7 @@ class CardRestaurantItem extends StatelessWidget{
           vertical: 18.0,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(15.0),
           boxShadow: [
             BoxShadow(
@@ -61,11 +61,11 @@ class CardRestaurantItem extends StatelessWidget{
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                          restaurant.name,
+                          restaurant.name!,
                           style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.w500)
                       ),
                       Text(
-                        restaurant.description,
+                        restaurant.description!,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey),
                         maxLines: 3,
                       ),
@@ -93,7 +93,7 @@ class CardRestaurantItem extends StatelessWidget{
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      restaurant.city,
+                      restaurant.city!,
                       style: Theme.of(context).textTheme.bodyText1,
                     )
                   ],

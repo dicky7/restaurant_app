@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:provider/provider.dart';
-import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/providers/restaurant_providers.dart';
 import 'package:restaurant_app/ui/main/favorite/favorite_page.dart';
 import 'package:restaurant_app/ui/main/home/detail/detail_page.dart';
 import 'package:restaurant_app/ui/main/home/home_page.dart';
@@ -13,7 +10,7 @@ import 'package:restaurant_app/utils/notification_helper.dart';
 class MainPage extends StatefulWidget{
   static const rootName = "/home_page";
 
-  MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -24,10 +21,10 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _listWidget = [
-    HomePage(),
-    SearchPage(),
-    FavoritePage(),
-    SettingPage(),
+    const HomePage(),
+    const SearchPage(),
+    const FavoritePage(),
+    const SettingPage(),
   ];
 
   final List<Color> tabColors = [
@@ -58,7 +55,7 @@ class _MainPageState extends State<MainPage> {
 
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,

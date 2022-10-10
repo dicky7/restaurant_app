@@ -8,10 +8,10 @@ class SchedulingProvider extends ChangeNotifier{
 
   bool get isScheduled => _isScheduled;
 
-  Future<bool> scheduleNews(bool value) async{
+  Future<bool> scheduleRestaurant(bool value) async{
     _isScheduled = value;
     if(_isScheduled){
-      print("Scheduling News Actived");
+      print("Scheduling Restaurant Actived");
       notifyListeners();
       return await AndroidAlarmManager.periodic(
           const Duration(seconds: 1),
@@ -23,7 +23,7 @@ class SchedulingProvider extends ChangeNotifier{
           wakeup: true
       );
     }else{
-      print("Scheduling News Cancel");
+      print("Scheduling Restaurant Cancel");
       notifyListeners();
       return await AndroidAlarmManager.cancel(1);
     }

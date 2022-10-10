@@ -1,15 +1,18 @@
-
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:restaurant_app/common/navigation.dart';
-import 'package:restaurant_app/common/utils.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/model/restaurant_details.dart';
+import 'package:restaurant_app/data/model/restaurant_data.dart';
+import 'package:restaurant_app/providers/database_provider.dart';
+import 'package:restaurant_app/ui/main/home/addReview/add_review_page.dart';
+import 'package:restaurant_app/ui/main/main_page.dart';
 
 class BodyDetail extends StatelessWidget {
   final Restaurant restaurant;
+
   BodyDetail({Key? key, required this.restaurant}) : super(key: key);
 
   bool isFavorite = false;
@@ -18,30 +21,73 @@ class BodyDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  _buildImageStack(size, context),
-                  _buildDescription(size, context),
-                ],
-              ),
-            ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                _buildImageStack(size, context),
+                _buildDescription(size, context),
+              ],
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: Container(
+        margin: const EdgeInsets.all(10),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigation.intentWithData(AddReviewPage.rootName,
+                arguments: restaurant.id);
+          },
+          backgroundColor: Colors.blue,
+          child: const Icon(
+            Icons.add,
+            color: Colors.white
           ),
         ),
       ),
     );
   }
 
+  Widget _buildImageStack(Size size, BuildContext context) {
+    return Stack(children: <Widget>[
+      Image.network(
+        ApiService().mediumImage(restaurant.pictureId),
+        height: size.height / 3,
+        width: size.width,
+        fit: BoxFit.cover,
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.blueGrey,
+              child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigation.intentWithDataClearTop(MainPage.rootName);
+                  }),
+            ),
+            _FavoriteButton(restaurant: restaurant),
+          ],
+        ),
+      ),
+    ]);
+  }
+
   Container _buildDescription(Size size, BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: size.height * 0.29),
       padding: const EdgeInsets.only(top: 15),
-      decoration: const BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(40), topRight: Radius.circular(40))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,10 +96,7 @@ class BodyDetail extends StatelessWidget {
             margin: const EdgeInsets.only(top: 12),
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(restaurant.name!,
-                style: GoogleFonts.poppins(
-                    fontSize: 27,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black)),
+                style: Theme.of(context).textTheme.headline5!.copyWith(fontWeight: FontWeight.w600)),
           ),
           Container(
             margin: const EdgeInsets.only(top: 10),
@@ -108,13 +151,13 @@ class BodyDetail extends StatelessWidget {
           const SizedBox(height: 7),
           _buildMenu(context,
               label: "Food",
-              menus: restaurant.menus!.foods,
-              colors: Colors.orange),
+              menus: restaurant.menus!.foods!,
+              colors: Colors.orange.shade300),
           const SizedBox(height: 7),
           _buildMenu(context,
               label: "Drinks",
-              menus: restaurant.menus!.drinks,
-              colors: Colors.lightBlue),
+              menus: restaurant.menus!.drinks!,
+              colors: Colors.lightBlue.shade300),
           const SizedBox(height: 7),
           Container(
             margin: const EdgeInsets.only(top: 14),
@@ -141,55 +184,27 @@ class BodyDetail extends StatelessWidget {
             ),
           ),
           _buildReview(context, restaurant.customerReviews!),
-          const SizedBox(height: 20)
+          const SizedBox(height: 15),
         ],
       ),
     );
   }
 
-  Stack _buildImageStack(Size size, BuildContext context) {
-    return Stack(children: <Widget>[
-      Image.network(
-        ApiService().mediumImage(restaurant.pictureId),
-        height: size.height / 3,
-        width: size.width,
-        fit: BoxFit.cover,
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.blueGrey,
-              child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigation.back();
-                  }),
-            ),
-            _favoriteButton(),
-          ],
-        ),
-      ),
-    ]);
-  }
-
   Widget _buildMenu(BuildContext context,
-      {required String label, required List<Category> menus, required Color colors}){
+      {required String label,
+      required List<Category> menus,
+      required Color colors}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           margin: const EdgeInsets.only(top: 14),
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-              label,
-              style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.w500)
-          ),
+          child: Text(label,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(fontWeight: FontWeight.w500)),
         ),
         Container(
             margin: const EdgeInsets.only(top: 10, left: 14),
@@ -200,37 +215,37 @@ class BodyDetail extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   margin: const EdgeInsets.symmetric(horizontal: 3),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: colors
-                  ),
+                      borderRadius: BorderRadius.circular(10), color: colors),
                   child: Center(
-                    child: Text(
-                        menus[index].name,
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.white)
-                    ),
+                    child: Text(menus[index].name!,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            ?.copyWith(color: Colors.white)),
                   ),
                 );
               },
-            )
-        ),
+            )),
       ],
     );
   }
 
-  Widget _buildReview(BuildContext context,List<CustomerReview> reviews) {
+  Widget _buildReview(BuildContext context, List<CustomerReview> reviews) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           margin: const EdgeInsets.only(top: 14),
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-              "Customer Review (${reviews.length})",
-              style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.w500)
-          ),
+          child: Text("Customer Review (${reviews.length})",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(fontWeight: FontWeight.w500)),
         ),
         const SizedBox(height: 10),
         ListView.builder(
@@ -241,18 +256,24 @@ class BodyDetail extends StatelessWidget {
             return Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         flex: 1,
                         child: Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color(
+                                      (math.Random().nextDouble() * 0xFFFFFF)
+                                          .toInt())
+                                  .withOpacity(1.0)),
                           height: 50,
                           child: const Icon(
-                              Icons.person,
-                              color: Colors.white,
+                            Icons.person,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -263,16 +284,25 @@ class BodyDetail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              reviews[index].name,
-                              style: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.w600),
+                              reviews[index].name!,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              reviews[index].date,
-                              style: Theme.of(context).textTheme.caption!.copyWith(fontWeight: FontWeight.w400),
+                              reviews[index].date!,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption!
+                                  .copyWith(fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              reviews[index].review,
-                              style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.w400),
+                              reviews[index].review!,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(fontWeight: FontWeight.w400),
                             )
                           ],
                         ),
@@ -289,25 +319,42 @@ class BodyDetail extends StatelessWidget {
   }
 }
 
-class _favoriteButton extends StatefulWidget{
+class _FavoriteButton extends StatefulWidget {
+  Restaurant restaurant;
+  _FavoriteButton({required this.restaurant});
+
   @override
-  State<_favoriteButton> createState() => _favoriteButtonState();
+  State<_FavoriteButton> createState() => _FavoriteButtonState();
 }
 
-class _favoriteButtonState extends State<_favoriteButton> {
-  bool isFavorite = false;
-
+class _FavoriteButtonState extends State<_FavoriteButton> {
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isFavorite ? Icons.favorite : Icons.favorite_border,
-        color: Colors.red,
-      ),
-      onPressed: () {
-        setState(() {
-          isFavorite = !isFavorite;
-        });
+    return Consumer<DatabaseProvider>(
+      builder: (context, provider, child) {
+        return FutureBuilder<bool>(
+          future: provider.isBookmarked(widget.restaurant.id!),
+          builder: (context, snapshot) {
+            var isBookmarked = snapshot.data ?? false;
+            return  isBookmarked
+            ? IconButton(
+              icon: const Icon(
+                Icons.favorite,
+                color: Colors.red,
+                size: 30,
+              ),
+              onPressed:() => provider.removeBookmarkById(widget.restaurant.id!)
+             )
+            : IconButton(
+              icon: const Icon(
+                Icons.favorite_border,
+                color: Colors.red,
+                size: 30,
+              ),
+              onPressed: () => provider.addBookmarks(widget.restaurant)
+            );
+          },
+        );
       },
     );
   }

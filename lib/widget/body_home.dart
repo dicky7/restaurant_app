@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/common/utils.dart';
-import 'package:restaurant_app/data/model/restaurant_data.dart';
 import 'package:restaurant_app/providers/restaurant_providers.dart';
-import 'package:restaurant_app/ui/main/home/detail/detail_page.dart';
 import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/card_restaurant_item.dart';
 
 class BodyHome extends StatelessWidget{
   final String name;
-  BodyHome({Key? key, required this.name}) : super(key: key);
+  const BodyHome({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +48,7 @@ class BodyHome extends StatelessWidget{
                               :(hour >= 12 && hour <= 18)
                               ?"Good Afternoon $name"
                               :"Good Night $name",
-                          style: const TextStyle(
-                              color: Colors.blueGrey,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400
-                          ),
+                          style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.w300)
                         ),
                       ),
                       Container(
@@ -71,7 +64,7 @@ class BodyHome extends StatelessWidget{
                   Text(
                     "Lets Find Nearest Restaurant",
                     style: Theme.of(context).textTheme.headline4!.copyWith(
-                      fontWeight: FontWeight.w700, color: secondaryColor,
+                      fontWeight: FontWeight.w700,
                       height: 1.2,
                     ),
                   ),

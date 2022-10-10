@@ -32,7 +32,7 @@ class OnBoardContent extends StatelessWidget {
           Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.blueGrey),
+            style: const TextStyle(color: Colors.blueGrey),
           ),
         ],
       ),

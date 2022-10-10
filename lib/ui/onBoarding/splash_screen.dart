@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/navigation.dart';
-import 'package:restaurant_app/ui/main/home/home_page.dart';
+import 'package:restaurant_app/providers/preferences_provider.dart';
 import 'package:restaurant_app/ui/main/main_page.dart';
 import 'package:restaurant_app/ui/onBoarding/on_boarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,26 +19,27 @@ class SplashScreen extends StatefulWidget{
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  var _state;
   late Timer _timer;
 
   @override
   void initState() {
-    getState();
+    super.initState();
+
     _timer = Timer(const Duration(seconds: 5), () {
-      if(_state == true){
+      var prefsUsername = Provider.of<PreferencesProvider>(context, listen: false).isUsername;
+      print(prefsUsername);
+      if(prefsUsername.isNotEmpty){
         Navigation.intentWithDataClearTop(MainPage.rootName);
       }
       else{
         Navigation.intentWithDataClearTop(OnBoarding.routName);
       }
     });
-    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
-    return  Scaffold(
+    return Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -60,14 +62,12 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
-  }
-
-
-  getState() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _state = prefs.getBool("loginState");
-    });
+    // return  Consumer<PreferencesProvider>(
+    //   builder: (context, provider, child) {
+    //     // print(provider.isUsername);
+    //
+    //   },
+    // );
   }
 
   @override
