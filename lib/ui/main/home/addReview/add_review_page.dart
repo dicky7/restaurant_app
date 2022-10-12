@@ -81,6 +81,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                       id: widget.restaurantId,
                       name: _nameController.text,
                       review: _reviewController.text);
+              Provider.of<AddReviewProvider>(context, listen: false).setPostState(ResultStatePost.idle);
             }
           },
         )
@@ -96,13 +97,14 @@ class _AddReviewPageState extends State<AddReviewPage> {
             child: Lottie.asset("images/logo.json", width: 250, height: 250),
           );
         } else if (state.state == ResultStatePost.success) {
-          Future.microtask(() {
-            customDialogData(context,
-                title: "Success",
-                message: "Congratulations, your review has been successfully added",
-                routeName: DetailPage.rootName,
-                arguments: widget.restaurantId);
-          });
+            Future.microtask(() {
+              customDialogData(context,
+                  title: "Success",
+                  message: "Congratulations, your review has been successfully added",
+                  routeName: DetailPage.rootName,
+                  arguments: widget.restaurantId);
+            });
+            Provider.of<AddReviewProvider>(context, listen: false).setPostState(ResultStatePost.idle);
           return Text("");
         } else if (state.state == ResultState.error) {
           Future.microtask((){

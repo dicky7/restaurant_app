@@ -6,14 +6,9 @@ import 'package:restaurant_app/providers/preferences_provider.dart';
 import 'package:restaurant_app/providers/scheduling_providers.dart';
 import 'package:restaurant_app/widget/custom_dialog.dart';
 
-class SettingPage extends StatefulWidget {
+class SettingPage extends StatelessWidget {
   const SettingPage({Key? key}) : super(key: key);
 
-  @override
-  State<SettingPage> createState() => _SettingPageState();
-}
-
-class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -9,6 +9,7 @@ import 'package:restaurant_app/data/model/restaurant_data.dart';
 import 'package:restaurant_app/providers/database_provider.dart';
 import 'package:restaurant_app/ui/main/home/addReview/add_review_page.dart';
 import 'package:restaurant_app/ui/main/main_page.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BodyDetail extends StatelessWidget {
   final Restaurant restaurant;
@@ -84,7 +85,7 @@ class BodyDetail extends StatelessWidget {
   Container _buildDescription(Size size, BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: size.height * 0.29),
-      padding: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
           borderRadius: const BorderRadius.only(
@@ -96,59 +97,13 @@ class BodyDetail extends StatelessWidget {
             margin: const EdgeInsets.only(top: 12),
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(restaurant.name!,
-                style: Theme.of(context).textTheme.headline5!.copyWith(fontWeight: FontWeight.w600)),
+                style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w600)),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue),
-                      child: const Icon(
-                        Icons.location_on_rounded,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      "${restaurant.city}",
-                      style: Theme.of(context).textTheme.bodyText1,
-                    )
-                  ],
-                ),
-                const SizedBox(width: 40),
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.amber),
-                      child: const Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      "${restaurant.rating}",
-                      style: Theme.of(context).textTheme.bodyText1,
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          const SizedBox(height: 7),
+          _buildRatingLocation(context),
+          const SizedBox(height: 5),
+          Divider(height: 10, color: Theme.of(context).primaryColor,),
+          const SizedBox(height: 5),
+          _builldTextDesc(context),
           _buildMenu(context,
               label: "Food",
               menus: restaurant.menus!.foods!,
@@ -159,35 +114,89 @@ class BodyDetail extends StatelessWidget {
               menus: restaurant.menus!.drinks!,
               colors: Colors.lightBlue.shade300),
           const SizedBox(height: 7),
-          Container(
-            margin: const EdgeInsets.only(top: 14),
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text("Description",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    ?.copyWith(fontWeight: FontWeight.w500)),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 5, bottom: 18),
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: ReadMoreText(
-              restaurant.description!,
-              trimLines: 4,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: 'Show more',
-              trimExpandedText: 'Show less',
-              colorClickableText: Colors.blue,
-              style: const TextStyle(height: 1.5),
-              moreStyle: const TextStyle(
-                  fontWeight: FontWeight.w500, color: Colors.blue),
-            ),
-          ),
           _buildReview(context, restaurant.customerReviews!),
           const SizedBox(height: 15),
         ],
       ),
     );
+  }
+
+  Widget _builldTextDesc(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text("Description",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      ?.copyWith(fontWeight: FontWeight.w500)),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 5, bottom: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: ReadMoreText(
+                restaurant.description!,
+                trimLines: 4,
+                trimMode: TrimMode.Line,
+                trimCollapsedText: 'Show more',
+                trimExpandedText: 'Show less',
+                colorClickableText: Colors.blue,
+                style: const TextStyle(height: 1.5),
+                moreStyle: const TextStyle(
+                    fontWeight: FontWeight.w500, color: Colors.blue),
+              ),
+            ),
+          ],
+        );
+  }
+
+  Widget _buildRatingLocation(BuildContext context) {
+    return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  RatingBarIndicator(
+                    rating: restaurant.rating!,
+                    direction: Axis.horizontal,
+                    itemCount: 5,
+                    itemSize: 15,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    "(${restaurant.rating})",
+                    style: Theme.of(context).textTheme.bodyText2,
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.location_on_rounded,
+                    color: Colors.red,
+                    size: 15,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    "${restaurant.address} ,${restaurant.city}",
+                    style: Theme.of(context).textTheme.bodyText2,
+                  )
+                ],
+              ),
+              const SizedBox(width: 40),
+            ],
+          ),
+        );
   }
 
   Widget _buildMenu(BuildContext context,
@@ -208,15 +217,14 @@ class BodyDetail extends StatelessWidget {
         ),
         Container(
             margin: const EdgeInsets.only(top: 10, left: 14),
-            height: 36,
+            height: 34,
             child: ListView.builder(
               shrinkWrap: false,
               itemCount: menus.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   margin: const EdgeInsets.symmetric(horizontal: 3),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10), color: colors),
@@ -224,7 +232,7 @@ class BodyDetail extends StatelessWidget {
                     child: Text(menus[index].name!,
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle1
+                            .subtitle2
                             ?.copyWith(color: Colors.white)),
                   ),
                 );

@@ -4,16 +4,18 @@ import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_data.dart';
 import 'package:restaurant_app/ui/main/home/detail/detail_page.dart';
 
-class CardRestaurantItem extends StatelessWidget{
+class CardRestaurantItem extends StatelessWidget {
   final Restaurant restaurant;
 
-  const CardRestaurantItem({Key? key, required this.restaurant}) : super(key: key);
+  const CardRestaurantItem({Key? key, required this.restaurant})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigation.intentWithData(DetailPage.rootName, arguments: restaurant.id);
+        Navigation.intentWithData(
+            DetailPage.rootName, arguments: restaurant.id);
       },
       child: Container(
         margin: const EdgeInsets.symmetric(
@@ -25,7 +27,7 @@ class CardRestaurantItem extends StatelessWidget{
           vertical: 18.0,
         ),
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(15.0),
           boxShadow: [
             BoxShadow(
@@ -62,11 +64,18 @@ class CardRestaurantItem extends StatelessWidget{
                     children: <Widget>[
                       Text(
                           restaurant.name!,
-                          style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.w500)
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6
+                              ?.copyWith(fontWeight: FontWeight.w500)
                       ),
                       Text(
                         restaurant.description!,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyText1,
                         maxLines: 3,
                       ),
                     ],
@@ -75,8 +84,6 @@ class CardRestaurantItem extends StatelessWidget{
               ],
             ),
             const SizedBox(height: 10),
-            Divider(color: Theme.of(context).colorScheme.secondary, thickness: 0.5),
-            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -84,7 +91,9 @@ class CardRestaurantItem extends StatelessWidget{
                   children: [
                     Container(
                       padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.blue),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.red),
                       child: const Icon(
                         Icons.location_on_rounded,
                         color: Colors.white,
@@ -94,7 +103,10 @@ class CardRestaurantItem extends StatelessWidget{
                     const SizedBox(width: 10),
                     Text(
                       restaurant.city!,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText1,
                     )
                   ],
                 ),
@@ -103,7 +115,9 @@ class CardRestaurantItem extends StatelessWidget{
                   children: [
                     Container(
                       padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.amber),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.amber),
                       child: const Icon(
                         Icons.star,
                         color: Colors.white,
@@ -113,12 +127,16 @@ class CardRestaurantItem extends StatelessWidget{
                     const SizedBox(width: 10),
                     Text(
                       restaurant.rating.toString(),
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText1,
                     )
                   ],
                 )
               ],
-            )
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

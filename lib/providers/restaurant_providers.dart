@@ -149,12 +149,16 @@ class AddReviewProvider extends ChangeNotifier {
 
   AddReviewProvider({required this.apiService});
 
-  ResultStatePost? _state;
+  ResultStatePost? _state = ResultStatePost.idle;
   String _message = "";
 
   ResultStatePost? get state => _state;
   String get message => _message;
 
+  void setPostState(ResultStatePost newState) {
+    _state = newState;
+    notifyListeners();
+  }
   Future<dynamic> addReviewRestaurant(
       {required String id,
       required String name,
