@@ -26,21 +26,19 @@ class _AddReviewPageState extends State<AddReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.only(top: 18),
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildAppBar(context),
-                  const SizedBox(height: 25),
-                  _buildTextForm(),
-                  _buildState()
-                ],
-              ),
+        child: Container(
+          margin: const EdgeInsets.only(top: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildAppBar(context),
+                const SizedBox(height: 25),
+                _buildTextForm(),
+                Flexible(child: _buildState())
+              ],
             ),
           ),
         ),

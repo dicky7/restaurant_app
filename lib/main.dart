@@ -21,6 +21,7 @@ import 'package:restaurant_app/ui/onBoarding/splash_screen.dart';
 import 'package:restaurant_app/utils/background_service.dart';
 import 'package:restaurant_app/utils/notification_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:restaurant_app/ui/main/home/city/restaurant_city.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -51,6 +52,11 @@ class MyApp extends StatelessWidget {
           create: (context) => ListRestaurantProviders(
               apiService: ApiService()
           )
+        ),
+        ChangeNotifierProvider<ListRestaurantProviders>(
+            create: (context) => ListRestaurantProviders(
+                apiService: ApiService()
+            )
         ),
         ChangeNotifierProvider<DetailRestaurantProvider>(
           create: (context) => DetailRestaurantProvider(apiService: ApiService()),
@@ -100,6 +106,9 @@ class MyApp extends StatelessWidget {
               DetailPage.rootName: (context) => DetailPage(
                 restaurantId: ModalRoute.of(context)?.settings.arguments as String,
               ),
+              RestaurantCityPage.rootName: (context) => RestaurantCityPage(
+                city: ModalRoute.of(context)?.settings.arguments as String,
+              )
             },
           );
         },
