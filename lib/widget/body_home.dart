@@ -134,7 +134,8 @@ class BodyHome extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(top: 14),
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Text(label,
+          child: Text(
+              label,
               style: Theme.of(context)
                   .textTheme
                   .headline6
@@ -143,6 +144,7 @@ class BodyHome extends StatelessWidget {
         Container(
             margin: const EdgeInsets.only(top: 10, left: 14),
             height: 34,
+            color: Theme.of(context).cardTheme.color,
             child: ListView.builder(
               shrinkWrap: false,
               itemCount: restaurant.length,
@@ -164,7 +166,7 @@ class BodyHome extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
-                              ?.copyWith(color: Colors.white)),
+                              ?.copyWith(fontWeight: FontWeight.w500)),
                     ),
                   ),
                 );
