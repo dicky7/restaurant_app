@@ -6,6 +6,9 @@ import 'package:restaurant_app/providers/preferences_provider.dart';
 import 'package:restaurant_app/providers/scheduling_providers.dart';
 import 'package:restaurant_app/widget/custom_dialog.dart';
 
+import '../../../common/navigation.dart';
+import '../../onBoarding/splash_screen.dart';
+
 class SettingPage extends StatelessWidget {
   const SettingPage({Key? key}) : super(key: key);
 
@@ -83,7 +86,23 @@ class SettingPage extends StatelessWidget {
                 ),
                 trailing: GestureDetector(
                   onTap: () {
-                    provider.removeUsername();
+                    showDialog(context: context, builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Logout"),
+                        content: const Text("Are your sure want logout? you may lose your data"),
+                        actions: [
+                          TextButton(onPressed: () {
+                            Navigation.back();
+                          }, child: const Text("No", style: TextStyle(color: Colors.red))
+                          ),
+                          TextButton(onPressed: () {
+                            provider.removeUsername();
+                            Navigation.intentWithDataClearTop(SplashScreen.rootName);
+                          }, child: const Text("Yes", style: TextStyle(color: Colors.indigo))
+                          )
+                        ],
+                      );
+                    });
                   },
                   child: Container(
                     margin: const EdgeInsets.only(right: 10),

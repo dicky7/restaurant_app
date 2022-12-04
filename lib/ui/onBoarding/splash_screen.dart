@@ -24,10 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     _timer = Timer(const Duration(seconds: 5), () {
       var prefsUsername = Provider.of<PreferencesProvider>(context, listen: false).isUsername;
-      print(prefsUsername);
+      print("username"+prefsUsername);
       if(prefsUsername.isNotEmpty){
         Navigation.intentWithDataClearTop(MainPage.rootName);
       }
