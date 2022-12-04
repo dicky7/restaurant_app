@@ -1,4 +1,4 @@
-# Submission Flutter Expert
+# Submission Flutter Fundamental
 This is a repository that contains the source code of my submissions project at Dicoding "Belajar Fundamental Aplikasi Flutter" course
 
 
