@@ -87,7 +87,7 @@ class BodyDetail extends StatelessWidget {
       margin: EdgeInsets.only(top: size.height * 0.29),
       padding: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).cardColor,
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(40), topRight: Radius.circular(40))),
       child: Column(
