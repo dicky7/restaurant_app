@@ -52,6 +52,7 @@ class PreferencesProvider extends ChangeNotifier{
   }
   void removeUsername(){
     preferencesHelper.removeUsername();
+    getUsername();
   }
 
 }

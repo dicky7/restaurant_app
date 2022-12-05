@@ -39,6 +39,6 @@ class PreferencesHelper{
   }
   void removeUsername() async{
     final prefs = await sharedPreferences;
-    prefs.remove(username);
+    prefs.setString(username, "");
   }
 }
