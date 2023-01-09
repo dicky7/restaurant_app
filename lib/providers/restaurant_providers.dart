@@ -10,6 +10,11 @@ import 'package:http/http.dart' as http;
 class ListRestaurantProviders extends ChangeNotifier {
   final ApiService apiService;
 
+  /**
+   * mengakses _fetchRestaurantList() dapat melalui constructor
+   * Artinya, ketika kelas ListRestaurantProviders dipanggil oleh kelas lain,
+   * maka secara otomatis fungsi mengakses _fetchRestaurantList() akan langsung dieksekusi atau dijalankan.
+   */
   ListRestaurantProviders({required this.apiService}) {
     _fetchRestaurantList();
   }
@@ -24,6 +29,10 @@ class ListRestaurantProviders extends ChangeNotifier {
 
   String get message => _message;
 
+  /**
+   * fungsi _fetchRestaurantList() juga merupakan sebuah fungsi yang bersifat private.
+   * Artinya, fungsi ini hanya dapat diakses di dalam kelas ListRestaurantProviders saja.
+   */
   Future<dynamic> _fetchRestaurantList() async {
     try {
       _state = ResultState.loading;
